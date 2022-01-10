@@ -22,7 +22,7 @@ If you're running on your local Mac machine, use this:
 blender -b -P render_rock.py
 ```
 
-### Voronoi Species
+### The Voronoi Family
 [Rock 0 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock0.json)
 
 ![Rock 0](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock0.png)
@@ -31,7 +31,7 @@ blender -b -P render_rock.py
 
 ![Rock 1](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock1.png)
 
-### Metaball Species
+### The Metaball Family
 [Rock 3 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock3.json)
 
 ![Rock 3](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock3.png)
@@ -46,14 +46,14 @@ blender -b -P render_rock.py
 blender -b -P breed_rock.py
 ```
 
-### Voronoi Breeding
+### Voronoi Spawning
 Rock 0 + Rock 1 = Rock 2
  
 [Rock 2 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock2.json)
 
 ![Rock 2](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock2.png)
 
-### Metaball Breeding
+### Metaball Spawning
 Rock 3 + Rock 4 = Rock 5
  
 [Rock 5 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock5.json)
