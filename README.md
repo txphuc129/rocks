@@ -3,7 +3,8 @@
 ## Setup
 
 1. Download [Blender](https://www.blender.org/download/).
-2. Run Blender command line:
+2. Install [scipy](https://scipy.org/install/).
+3. Run Blender command line:
 
 ```
 blender -b -P your_blender_script.py
