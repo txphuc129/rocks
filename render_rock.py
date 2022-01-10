@@ -16,5 +16,5 @@ def render(dna):
 
 
 if __name__ == '__main__':
-    dna = breed_utils.load_rock(4)
+    dna = breed_utils.load_rock(0)
     render(dna)

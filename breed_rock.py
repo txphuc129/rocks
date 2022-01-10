@@ -3,7 +3,7 @@ import sys
 import json
 sys.path.append("")
 import breed_utils
-from rock_render import render
+from render_rock import render
 from voronoi import breed_voronoi
 from metaball import breed_metaball
 
