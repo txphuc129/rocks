@@ -86,7 +86,7 @@ def render_voronoi(dna):
     render_utils.remove_all()
 
     # Create camera and lamp
-    render_utils.simple_scene((0, 0, 0), (5.5, 0, 0), (-5, 5, 10))
+    render_utils.simple_scene((0, 0, 0), (5.5, 0, 0), (5, 5, 10))
 
     # Color palette
     # http://www.colourlovers.com/palette/1189317/Rock_Mint_Splash
