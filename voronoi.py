@@ -3,6 +3,7 @@ import bpy
 import sys
 import json
 import bmesh
+from breed_rock_constants import MAX_DENSITY, MAX_RADIUS, MIN_DENSITY, MIN_RADIUS
 import numpy as np
 import scipy.spatial as spatial
 from mathutils import Vector, Matrix
@@ -64,13 +65,13 @@ def VoronoiSphere(bm, points, r=2, offset=0.02, num_materials=1):
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
 
 
-def breed_voronoi(dad, mom, id):
+def breed_voronoi(parent1, parent2, id):
     child = {}
     child['id'] = id
     child['family'] = "voronoi"
-    child['density'] = breed_utils.int(dad['density'], mom['density'], 0, 100000)
-    child['radius'] = breed_utils.int(dad['radius'], mom['radius'], 0, 4)
-    child['palette'] = breed_utils.palette(dad['palette'], mom['palette'])
+    child['density'] = breed_utils.int(parent1['density'], parent2['density'], MIN_DENSITY, MAX_DENSITY)
+    child['radius'] = breed_utils.int(parent1['radius'], parent2['radius'], MIN_RADIUS, MAX_RADIUS)
+    child['palette'] = breed_utils.palette(parent1['palette'], parent2['palette'])
     return child
 
 

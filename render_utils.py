@@ -176,7 +176,7 @@ def render(
             bpy.ops.render.render(animation=True)
         else:
             # Render still frame
-            scene.render.filepath = os.path.join(
+            scene.render.filepath = os.path.join("./",
                 render_folder,
                 render_name + '.png')
             bpy.ops.render.render(write_still=True)
