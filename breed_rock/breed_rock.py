@@ -1,6 +1,6 @@
 import sys
 sys.path.append("")  # NOQA
-from breed_rock.breed_utils import breed_metaball, breed_voronoi
+from breed_rock.breed_utils import breed_metaball, breed_voronoi, save_rock
 from common.parser_utils import parse_argv
 from render_rock.render_rock import render
 
@@ -42,6 +42,7 @@ if __name__ == '__main__':
         parent_2 = data['parent_2']
         child_id = data['child_id']
         child = breed(parent_1['properties'], parent_2['properties'], child_id)
+        save_rock(child, child_id)
         render(child, dist)
     except ValueError as e:
         # TODO: do something else with the error
