@@ -7,36 +7,26 @@
 3. Run Blender command line:
 
 ```bash
-blender -b -P your_blender_script.py -- --data='{JSON object}' --dist='/app/dist/'
+blender -b -P function_folder/your_blender_script.py -- --data='{JSON object}' --dist='/rocks/dist/'
 ```
 
 If you're running on your local Mac machine, use this:
 
 ```bash
-/Applications/Blender.app/Contents/MacOS/Blender -b -P your_blender_script.py -- --data='{JSON object}' --dist='/app/dist/'
-```
-
-## Command Line Arguments Example
-
-### Data
-
-```text
---data='{"childId": "2","parent1": {"id": "0", "properties": {"family": "voronoi", "density": 2000, "radius": 2, "palette": [[89, 91, 90], [20, 195, 162], [13, 229, 168], [124, 244, 154], [184, 253, 153]]}}, "parent2": {"id": "1", "properties": {"family": "voronoi", "density": 2000, "radius": 2, "palette": [[244, 101, 160], [168, 111, 179], [201, 21, 85], [107, 40, 129], [47, 21, 37]]}}}'
-```
-
-### Dist
-
-```text
---dist='/app/dist/'
+/Applications/Blender.app/Contents/MacOS/Blender -b -P function_folder/your_blender_script.py -- --data='{JSON object}' --dist='/rocks/dist/'
 ```
 
 ## Render Rocks
 
 ```bash
-blender -b -P render_rock.py -- --data='{JSON object}' --dist='/app/dist/'
+blender -b -P render_rock/render_rock.py -- --data='{JSON object}' --dist='/rocks/dist/'
 ```
 
 ### The Voronoi Family
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b -P render_rock/render_rock.py -- --data='{"id": "1", "family": "voronoi", "density": 2000, "radius": 2, "palette": [[244, 101, 160], [168, 111, 179], [201, 21, 85], [107, 40, 129], [47, 21, 37]]}' --dist='/rocks/dist/'
+```
 
 [Rock 0 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock0.json)
 
@@ -47,6 +37,10 @@ blender -b -P render_rock.py -- --data='{JSON object}' --dist='/app/dist/'
 ![Rock 1](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock1.png)
 
 ### The Metaball Family
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b -P render_rock/render_rock.py -- --data='{"id": "4", "family": "metaball", "density": 1000, "radius_0": 2, "radius_1": 4, "energy": 50}' --dist='/rocks/dist/'
+```
 
 [Rock 3 DNA](https://github.com/rove-to/rocks/blob/main/dna/rock3.json)
 
@@ -59,10 +53,14 @@ blender -b -P render_rock.py -- --data='{JSON object}' --dist='/app/dist/'
 ## Breed Rocks
 
 ```bash
-blender -b -P breed_rock.py -- --data='{JSON object}' --dist='/app/dist/'
+blender -b -P breed_rock/breed_rock.py -- --data='{JSON object}' --dist='/rocks/dist/'
 ```
 
 ### Voronoi Spawning
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b -P breed_rock/breed_rock.py -- --data='{"childId": "2","parent1": {"id": "0", "properties": {"family": "voronoi", "density": 2000, "radius": 2, "palette": [[89, 91, 90], [20, 195, 162], [13, 229, 168], [124, 244, 154], [184, 253, 153]]}}, "parent2": {"id": "1", "properties": {"family": "voronoi", "density": 2000, "radius": 2, "palette": [[244, 101, 160], [168, 111, 179], [201, 21, 85], [107, 40, 129], [47, 21, 37]]}}}' --dist='/rocks/dist/'
+```
 
 Rock 0 + Rock 1 = Rock 2
 
@@ -71,6 +69,10 @@ Rock 0 + Rock 1 = Rock 2
 ![Rock 2](https://raw.githubusercontent.com/rove-to/rocks/main/rocks/rock2.png)
 
 ### Metaball Spawning
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b -P breed_rock/breed_rock.py -- --data='{"childId": "5","parent1": {"id": "3", "properties": {"family": "metaball", "density": 150, "radius_0": 4, "radius_1": 2.5, "energy": 100}}, "parent2": {"id": "4", "properties": {"family": "metaball", "density": 1000, "radius_0": 2, "radius_1": 4, "energy": 50}}}' --dist='/rocks/dist/'
+```
 
 Rock 3 + Rock 4 = Rock 5
 
