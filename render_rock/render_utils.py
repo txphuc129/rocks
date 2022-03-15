@@ -1,4 +1,5 @@
 import random
+from common.parser_utils import parse_metaball_props, parse_voronoi_props
 import numpy as np
 from mathutils import Vector
 import scipy.spatial as spatial
@@ -11,12 +12,12 @@ from math import sin, cos, pi
 TAU = 2*pi
 
 
-def load_rock(rock_id):
-    file = os.path.join(os.path.dirname(__file__),
-                        "../dna/rock" + str(rock_id) + ".json")
-    with open(file, 'r') as f:
-        dna = json.load(f)
-    return dna
+# def load_rock(rock_id):
+#     file = os.path.join(os.path.dirname(__file__),
+#                         "../dna/rock" + str(rock_id) + ".json")
+#     with open(file, 'r') as f:
+#         dna = json.load(f)
+#     return dna
 
 
 def render(
@@ -44,7 +45,7 @@ def render(
         render_folder = os.path.abspath(goal_path)
 
         if not os.path.exists(render_folder):
-            os.mkdir(render_folder)
+            os.makedirs(render_folder, exist_ok=True)
 
         if animation:
             # Render animation
@@ -264,10 +265,10 @@ def voronoi_sphere(bm, points, r=2, offset=0.02, num_materials=1):
 
 
 def render_voronoi(dna, dist):
-
-    n = dna['density']
-    r = dna['radius']
-    palette = dna['palette']
+    properties = dna['properties']
+    n = properties['density']
+    r = properties['radius']
+    palette = properties['palette']
 
     print(__file__)
 
@@ -326,6 +327,7 @@ def create_metaball(origin=(0, 0, 0), n=30, r0=4, r1=2.5):
 
 
 def render_metaball(dna, dist):
+    properties = dna['properties']
 
     # Remove all elements
     remove_all()
@@ -335,11 +337,11 @@ def render_metaball(dna, dist):
     camera = create_camera((-10, -10, 10), target)
 
     # Create lights
-    rainbow_lights(10, 100, 3, energy=dna['energy'])
+    rainbow_lights(10, 100, 3, energy=properties['energy'])
 
     # Create metaball
     obj = create_metaball(
-        n=dna['density'], r0=dna['radius_0'], r1=dna['radius_1'])
+        n=properties['density'], r0=properties['radius_0'], r1=properties['radius_1'])
 
     # Create material
     mat = create_material(metalic=0.5)
@@ -351,3 +353,21 @@ def render_metaball(dna, dist):
 
     # Render scene
     render(dist, 'rock' + str(dna['id']), 512, 512)
+
+
+def parse_render_data(data):
+    # check for fields in data
+    if 'id' not in data:
+        raise ValueError('Missing id')
+    if 'properties' not in data:
+        raise ValueError('Missing properties')
+    properties = data['properties']
+    if 'family' not in properties:
+        raise ValueError('Missing family')
+
+    if properties['family'] == 'voronoi':
+        parse_voronoi_props(properties)
+    elif properties['family'] == 'metaball':
+        parse_metaball_props(properties)
+    else:
+        raise ValueError('Invalid family')

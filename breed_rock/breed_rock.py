@@ -1,11 +1,11 @@
 import sys
 sys.path.append("")  # NOQA
-from breed_rock.breed_utils import breed_metaball, breed_voronoi, save_rock
+from breed_rock.breed_utils import breed_metaball, breed_voronoi, parse_breed_data, save_rock
 from common.parser_utils import parse_argv
 from render_rock.render_rock import render
 
 
-def breed(parent_1, parent_2, child_id):
+def breed(parent_props_1, parent_props_2, child_id):
     """	Breed a child rock by randomizing the parents' properties
 
     Args:
@@ -21,29 +21,23 @@ def breed(parent_1, parent_2, child_id):
             dict: child DNA
     """
 
-    if parent_1['family'] != parent_2['family']:
-        raise ValueError('Cannot breed two rocks with different families')
-
-    family = parent_1['family']
+    family = parent_props_1['family']
     if family == 'voronoi':
-        child = breed_voronoi(parent_1, parent_2, child_id)
-    elif family == 'metaball':
-        child = breed_metaball(parent_1, parent_2, child_id)
+        child = breed_voronoi(parent_props_1, parent_props_2, child_id)
     else:
-        raise ValueError('Unidentifiable family')
+        child = breed_metaball(parent_props_1, parent_props_2, child_id)
 
     return child
 
 
-if __name__ == '__main__':
+def breed_rock(data, dist_rendered, dist_dna):
     try:
-        data, dist = parse_argv()
+        parse_breed_data(data)
         parent_1 = data['parent_1']
         parent_2 = data['parent_2']
         child_id = data['child_id']
         child = breed(parent_1['properties'], parent_2['properties'], child_id)
-        save_rock(child, child_id)
-        render(child, dist)
+        save_rock(child, child_id, dist_dna)
+        render(child, dist_rendered)
     except ValueError as e:
-        # TODO: do something else with the error
         print(e)
