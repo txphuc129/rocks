@@ -1,21 +1,22 @@
 import sys
 sys.path.append("")  # NOQA
-from common.parser_utils import parse_argv
-from render_rock.render_utils import parse_render_data, render_metaball, render_voronoi
+
+from render_rock.render_utils import create_rock, render_metaball, render_voronoi
+from common.constants import METABALL, VORONOI
+from common.utils import get_family
 
 
-def render(dna, dist):
-    properties = dna['properties']
-    family = properties['family']
-    if family == 'voronoi':
-        render_voronoi(dna, dist)
-    elif family == 'metaball':
-        render_metaball(dna, dist)
+def render(rock, family, dist):
+    if family == VORONOI:
+        render_voronoi(rock, dist)
+    elif family == METABALL:
+        render_metaball(rock, dist)
 
 
 def render_rock(data, dist):
     try:
-        parse_render_data(data)
-        render(data, dist)
-    except ValueError as e:
+        family = get_family(data)
+        rock = create_rock(data, family)
+        render(rock, family, dist)
+    except BaseException as e:
         print(e)

@@ -1,43 +1,52 @@
 import sys
 sys.path.append("")  # NOQA
-from breed_rock.breed_utils import breed_metaball, breed_voronoi, parse_breed_data, save_rock
-from common.parser_utils import parse_argv
+from breed_rock.constants import CHILD_ID, PARENT1, PARENT2
+from common.constants import VORONOI
+from breed_rock.breed_utils import breed_metaball, breed_voronoi, create_parents, parse_breed_data, save_rock
 from render_rock.render_rock import render
 
 
-def breed(parent_props_1, parent_props_2, child_id):
+def breed(parent1_dna, parent2_dna, child_id, family):
     """	Breed a child rock by randomizing the parents' properties
 
     Args:
-            parent_1 (dict): properties of the first parent
-            parent_2 (dict): properties of the second parent
-            child_id (str): child id
-
-    Raises:
-            ValueError: different families
-            ValueError: unidentifiable family
+        parent1 (dict): properties of the first parent
+        parent2 (dict): properties of the second parent
+        child_id (str): child id
+        family (str): parents' family
 
     Returns:
-            dict: child DNA
+        Voronoi | Metaball: child entity
     """
-
-    family = parent_props_1['family']
-    if family == 'voronoi':
-        child = breed_voronoi(parent_props_1, parent_props_2, child_id)
+    if family == VORONOI:
+        child = breed_voronoi(parent1_dna, parent2_dna, child_id, family)
     else:
-        child = breed_metaball(parent_props_1, parent_props_2, child_id)
-
+        child = breed_metaball(parent1_dna, parent2_dna, child_id, family)
     return child
 
 
 def breed_rock(data, dist_rendered, dist_dna):
+    """Reformat the input data
+       Create and save the child entity
+       Render the child entity
+
+    Args:
+        data (dict): _description_
+        dist_rendered (str): destination of the child's image (.png)
+        dist_dna (str): destination of the child's dna (.json)
+    """
     try:
+        # parse input
         parse_breed_data(data)
-        parent_1 = data['parent_1']
-        parent_2 = data['parent_2']
-        child_id = data['child_id']
-        child = breed(parent_1['properties'], parent_2['properties'], child_id)
-        save_rock(child, child_id, dist_dna)
-        render(child, dist_rendered)
+
+        # init child entity
+        parent1, parent2, family = create_parents(
+            data[PARENT1], data[PARENT2])
+        child_id = data[CHILD_ID]
+        child = breed(parent1.properties, parent2.properties, child_id, family)
+
+        # save and render child entity
+        save_rock(child, dist_dna)
+        render(child, family, dist_rendered)
     except ValueError as e:
         print(e)
